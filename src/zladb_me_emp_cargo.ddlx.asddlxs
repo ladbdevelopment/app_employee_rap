@@ -1,0 +1,46 @@
+@Metadata.layer: #CUSTOMER
+
+@UI: { headerInfo: { typeName: 'Position',
+                     typeNamePlural: 'Positions',
+                     title: { type: #STANDARD,
+                              label: 'Position',
+                              value: 'Name' } } }
+annotate entity ZLADB_C_EMP_CARGO with
+{
+  @UI.facet: [{ id: 'Position',
+                purpose: #STANDARD,
+                type: #IDENTIFICATION_REFERENCE,
+                label: 'Position',
+                position: 10 },
+              { id: 'Function',
+                purpose: #STANDARD,
+                type: #LINEITEM_REFERENCE,
+                label: 'Functions',
+                position: 20,
+                targetElement: '_EmpFunc' }]
+
+  @UI.hidden: true
+  EmployeeUiid;
+
+  @UI.hidden: true
+  CargoUiid;
+
+  @UI: { lineItem: [{ position: 10, importance: #HIGH }],
+         identification: [{ position: 10, label: 'Name Position' }] }
+  Name;
+
+  @UI.hidden: true
+  LocalCreatedBy;
+
+  @UI.hidden: true
+  LocalCreatedAt;
+
+  @UI.hidden: true
+  LocalLastChangedBy;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+
+  @UI.hidden: true
+  LastChangedAt;
+}

@@ -1,0 +1,10 @@
+@EndUserText.label: 'Employee Service Definition'
+define service ZLADB_SD_EMPLOYEE {
+  expose ZLADB_C_EMPLOYEE;
+  expose ZLADB_C_EMP_CARGO;
+  expose ZLADB_C_EMP_FUNCIO;
+  expose ZLADB_C_ATTACH_EMP;
+  expose I_Currency;
+  expose I_Country;
+  expose ZI_LADB_IDENTIFI;
+}

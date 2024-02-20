@@ -1,0 +1,206 @@
+@Metadata.layer: #CUSTOMER
+@Search.searchable: true
+
+@UI: { headerInfo: { typeName: 'Employee',
+                     typeNamePlural: 'Employees',
+                     imageUrl: 'Content',
+                     title: { type: #STANDARD,
+                              value: 'EmployeeId' },
+                     description: { type: #STANDARD,
+                                    value: 'FirstName' } } ,
+       presentationVariant: [{ sortOrder: [{ by: 'EmployeeId',
+                                             direction: #ASC }],
+            visualizations: [{ type: #AS_LINEITEM }] }] }
+
+annotate entity ZLADB_C_EMPLOYEE with
+{
+  @UI.facet:
+            [
+                {
+                    purpose: #HEADER,
+                    type: #FIELDGROUP_REFERENCE,
+                    targetQualifier: 'fullnameFacet',
+                    label: 'Employee Summary'
+                 },
+                 {
+                    id: 'Employee',
+                    purpose: #STANDARD,
+                    type: #IDENTIFICATION_REFERENCE,
+                    label: 'Employee information',
+                    position: 10
+                 },
+                 {
+                    purpose: #STANDARD,
+                    id: 'InfoContract',
+                    type: #COLLECTION,
+                    label: 'Contract information',
+                    position: 20
+                 },
+                 {
+                    purpose: #STANDARD,
+                    type: #FIELDGROUP_REFERENCE,
+                    targetQualifier: 'InfoContract',
+                    parentId: 'InfoContract',
+                    position: 20
+                 },    
+                 {
+                    purpose: #STANDARD,
+                    id: 'Attachment',
+                    type: #COLLECTION,
+                    label: 'Employee Photograph',
+                    position: 30
+                 },
+                 {
+                    purpose: #STANDARD,
+                    type: #FIELDGROUP_REFERENCE,
+                    targetQualifier: 'Attachment',
+                    parentId: 'Attachment',
+                    position: 30
+                 },                
+                 {
+                    id: 'Position',
+                    purpose: #STANDARD,
+                    type: #LINEITEM_REFERENCE,
+                    label: 'Positions',
+                    position: 40,
+                    targetElement: '_EmployeeCargo'
+                 }
+            ]
+
+  @UI.hidden: true
+  EmployeeUiid;
+
+  @UI: {
+            lineItem       : [{ position: 10, importance: #HIGH    }],
+            identification : [{ position: 10, label: 'Employee ID' }],
+            selectionField : [{ position: 10 }]
+        }
+  EmployeeId;
+
+  @Consumption.valueHelpDefinition: [
+                                        {
+                                            entity : { name: 'ZI_LADB_IDENTIFI',
+                                            element: 'TypeId' },
+                                            useForValidation: true
+                                         }
+                                     ]
+
+  @UI: {
+            lineItem       : [{ position: 20, importance: #HIGH  }],
+            identification : [{ position: 20, label: 'ID Type'   }],
+            selectionField : [{ position: 20 }],
+            textArrangement: #TEXT_ONLY
+        }
+  TypeId;
+
+  @UI.hidden: true
+  IdentificationText;
+
+  @Search.defaultSearchElement: true
+  @Search.fuzzinessThreshold: 0.7
+  @UI: {
+            lineItem       : [{ position: 30, importance: #HIGH          }],
+            identification : [{ position: 30, label: 'ID Identification' }],
+            selectionField : [{ position: 30 }]
+        }
+  NumberIdentification;
+
+  @Search.fuzzinessThreshold: 0.7
+  @UI: {
+            lineItem       : [{ position: 40, importance: #HIGH             }],
+            fieldGroup     : [{ qualifier: 'fullnameFacet', position: 10    }],
+            identification : [{ position: 40, label: 'First Name'           }],
+            selectionField : [{ position: 40                                }]
+        }
+  FirstName;
+
+  @Search.fuzzinessThreshold: 0.7
+  @UI: {
+            lineItem       : [{ position: 50, importance: #HIGH             }],
+            fieldGroup     : [{ qualifier: 'fullnameFacet', position: 20    }],
+            identification : [{ position: 50, label: 'Last Name'            }],
+            selectionField : [{ position: 50                                }]
+        }
+  LastName;
+
+
+  @UI: {
+            lineItem        : [{ position: 10, importance: #MEDIUM                          }],
+            fieldGroup      : [ { qualifier: 'InfoContract', position: 10, label: 'Salary'  }]            
+        }
+  Salary;
+
+  @Consumption.valueHelpDefinition: [
+                                        {
+                                            entity : { name: 'I_Currency',
+                                            element: 'Currency' },
+                                            useForValidation: true
+                                         }
+                                    ]
+  @UI.hidden: true
+  Currency;
+
+
+  @Consumption.valueHelpDefinition: [
+                                        {
+                                            entity : { name: 'I_Country',
+                                            element: 'Country' },
+                                            useForValidation: true
+                                         }
+                                    ]
+  @UI: {
+            lineItem:       [{ position: 70, importance: #HIGH   }],
+            identification: [{ position: 70, label: 'Country'    }],
+            selectionField: [{ position: 70 }],
+            textArrangement: #TEXT_ONLY
+        }
+  CountryId;
+
+  @UI.hidden: true
+  CountryName;
+
+
+  @UI.hidden: true
+  City;
+
+
+  @UI: {
+            fieldGroup      : [ { qualifier: 'Attachment', position: 20           }]
+        }
+  Content;
+
+  @UI.hidden: true
+  PhotoName;
+
+  @UI.hidden: true
+  Mimetype;
+
+  @UI: {
+            lineItem        : [{ position: 20, importance: #LOW                                         }],
+            fieldGroup      : [ { qualifier: 'InfoContract', position: 20, label: 'Contract Start Date' }]
+        }
+  StartDate;
+
+  @UI: {
+            lineItem        : [{ position: 30, importance: #LOW                                     }],
+            fieldGroup      : [{ qualifier: 'InfoContract', position: 30,label: 'Contract End Date' }]            
+       }
+  BeginDate;
+
+  @UI.hidden: true
+  LocalCreatedBy;
+
+  @UI.hidden: true
+  LocalCreatedAt;
+
+  @UI.hidden: true
+  LocalLastChangedBy;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+
+  @UI.hidden: true
+  LastChangedAt;
+
+
+}

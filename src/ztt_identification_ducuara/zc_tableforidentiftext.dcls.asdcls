@@ -1,0 +1,5 @@
+@MappingRole: true
+define role ZC_TableForIdentifText {
+  grant select on ZC_TableForIdentifText
+  where INHERITING CONDITIONS FROM ENTITY ZI_TableForIdentifText;
+}

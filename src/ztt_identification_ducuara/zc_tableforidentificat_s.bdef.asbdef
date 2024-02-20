@@ -1,0 +1,40 @@
+projection implementation in class ZBP_C_TABLEFORIDENTIFICAT_S unique;
+strict;
+use draft;
+
+define behavior for ZC_TableForIdentificat_S alias TableForIdentifiAll
+
+{
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+  use action SelectCustomizingTransptReq;
+
+  use association _TableForIdentificat { create ( augment ); with draft; }
+}
+
+define behavior for ZC_TableForIdentificat alias TableForIdentificat
+
+{
+  field ( modify )
+   Text;
+
+
+  use update( augment );
+  use delete;
+
+  use association _TableForIdentifiAll { with draft; }
+  use association _TableForIdentifText { create; with draft; }
+}
+
+define behavior for ZC_TableForIdentifText alias TableForIdentifText
+
+{
+  use update;
+  use delete;
+
+  use association _TableForIdentifiAll { with draft; }
+  use association _TableForIdentificat { with draft; }
+}

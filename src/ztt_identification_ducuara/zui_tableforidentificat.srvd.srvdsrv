@@ -1,0 +1,6 @@
+@ObjectModel.leadingEntity.name: 'ZC_TableForIdentificat_S'
+define service ZUI_TABLEFORIDENTIFICAT {
+  expose ZC_TABLEFORIDENTIFICAT_S as TableForIdentifiAll;
+  expose ZC_TABLEFORIDENTIFICAT as TableForIdentificat;
+  expose ZC_TABLEFORIDENTIFTEXT as TableForIdentifText;
+}

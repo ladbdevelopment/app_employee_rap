@@ -1,0 +1,115 @@
+managed with additional save implementation in class ZBP_I_TABLEFORIDENTIFICAT_S unique;
+strict;
+with draft;
+
+define behavior for ZI_TableForIdentificat_S alias TableForIdentifiAll
+draft table ZLADB_IDENT_D_S
+with unmanaged save
+lock master total etag LastChangedAtMax
+authorization master( global )
+
+{
+  field ( readonly )
+   SingletonID;
+
+  field ( notrigger )
+   SingletonID,
+   HideTransport,
+   LastChangedAtMax;
+
+
+  update;
+  internal create;
+  internal delete;
+
+  draft action ( features : instance ) Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+  action ( features : instance ) SelectCustomizingTransptReq parameter D_SelectCustomizingTransptReqP result [1] $self;
+
+  association _TableForIdentificat { create ( features : instance ); with draft; }
+}
+
+define behavior for ZI_TableForIdentificat alias TableForIdentificat
+persistent table ZLADB_IDENTIFI
+draft table ZLADB_IDENTIF_1
+etag master LocalLastChangedAt
+lock dependent by _TableForIdentifiAll
+authorization dependent by _TableForIdentifiAll
+
+{
+  field ( mandatory : create )
+   TypeId;
+
+  field ( readonly )
+   SingletonID,
+   LastChangedAt,
+   LocalLastChangedAt;
+
+  field ( readonly : update )
+   TypeId;
+
+  field ( notrigger )
+   SingletonID,
+   LastChangedAt,
+   LocalLastChangedAt;
+
+
+  update( features : global );
+  delete( features : global );
+
+  mapping for ZLADB_IDENTIFI
+  {
+    TypeId = TYPE_ID;
+    LastChangedAt = LAST_CHANGED_AT;
+    LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
+  }
+
+  association _TableForIdentifiAll { with draft; }
+  association _TableForIdentifText { create ( features : global ); with draft; }
+
+  validation ValidateTransportRequest on save ##NOT_ASSIGNED_TO_DETACT { create; update; delete; }
+}
+
+define behavior for ZI_TableForIdentifText alias TableForIdentifText
+persistent table ZLADB_IDENTIFIT
+draft table ZLADB_IDENTIF_2
+etag master LocalLastChangedAt
+lock dependent by _TableForIdentifiAll
+authorization dependent by _TableForIdentifiAll
+
+{
+  field ( mandatory : create )
+   Spras;
+
+  field ( readonly )
+   SingletonID,
+   TypeId,
+   LocalLastChangedAt;
+
+  field ( readonly : update )
+   Spras;
+
+  field ( notrigger )
+   SingletonID,
+   LocalLastChangedAt;
+
+
+  update( features : global );
+  delete( features : global );
+
+  mapping for ZLADB_IDENTIFIT
+  {
+    Spras = SPRAS;
+    TypeId = TYPE_ID;
+    Text = TEXT;
+    LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
+  }
+
+  association _TableForIdentifiAll { with draft; }
+  association _TableForIdentificat { with draft; }
+
+  validation ValidateTransportRequest on save ##NOT_ASSIGNED_TO_DETACT { create; update; delete; }
+}

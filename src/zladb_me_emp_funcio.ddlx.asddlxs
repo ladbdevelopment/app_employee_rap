@@ -1,0 +1,41 @@
+@Metadata.layer: #CUSTOMER
+
+@UI: { headerInfo: { typeName: 'Function',
+                     typeNamePlural: 'Functions',
+                     title: { type: #STANDARD,
+                              label: 'Function',
+                              value: 'NameFunction' } } }
+annotate entity ZLADB_C_EMP_FUNCIO with
+{
+
+  @UI.facet: [{ id: 'Funtion',
+                purpose: #STANDARD,
+                type: #IDENTIFICATION_REFERENCE,
+                label: 'Functions',
+                position: 10 }]
+
+  @UI.hidden: true
+  EmployeeUiid;
+
+  @UI.hidden: true
+  CargoUiid;
+
+  @UI: { lineItem: [{ position: 10, importance: #HIGH }],
+         identification: [{ position: 10, label: 'Function Name' }] }
+  NameFunction;
+
+  @UI.hidden: true
+  LocalCreatedBy;
+
+  @UI.hidden: true
+  LocalCreatedAt;
+
+  @UI.hidden: true
+  LocalLastChangedBy;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+
+  @UI.hidden: true
+  LastChangedAt;
+}

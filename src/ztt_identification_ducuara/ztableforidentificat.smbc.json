@@ -1,0 +1,39 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "Maintain Table for identification type",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "serviceConfiguration": {
+    "serviceBinding": "ZUI_TABLEFORIDENTIFICAT_O4",
+    "serviceName": "ZUI_TABLEFORIDENTIFICAT_O4",
+    "serviceVersion": "0001",
+    "rootEntitySet": "TableForIdentifiAll",
+    "name": "Table for identification type",
+    "configurationGroup": "",
+    "skipRootEntity": true
+  },
+  "appConfiguration": {
+    "listReport": {},
+    "objectPages": [
+      {
+        "entitySet": "TableForIdentifiAll",
+        "variantManagement": "control"
+      }
+    ],
+    "tableSettings": [
+      {
+        "entitySet": "TableForIdentifText",
+        "tableType": "gridTable",
+        "creationModeName": "creationRow"
+      },
+      {
+        "entitySet": "TableForIdentificat",
+        "tableType": "gridTable",
+        "creationModeName": "creationRow",
+        "rowCountMode": "auto"
+      }
+    ]
+  }
+}

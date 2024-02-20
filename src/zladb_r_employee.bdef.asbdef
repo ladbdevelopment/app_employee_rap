@@ -1,0 +1,147 @@
+managed implementation in class zbp_ladb_r_employee unique;
+strict ( 2 );
+with draft;
+
+define behavior for zladb_r_employee alias Employee
+persistent table zladb_employee_p
+draft table zdladb_employee
+lock master
+total etag LastChangedAt
+authorization master ( instance )
+etag master LastChangedAt
+{
+  create;
+  update;
+  delete;
+//  association _AttachEmp { create; with draft; }
+  association _EmployeeCargo { create; with draft; }
+
+  field ( numbering : managed, readonly ) EmployeeUiid;
+  field ( readonly ) LastChangedAt, LocalCreatedAt, LocalCreatedBy, LocalLastChangedAt, LocalLastChangedBy;
+  field ( mandatory ) EmployeeId, FirstName, LastName, NumberIdentification, TypeId, Salary, Currency, CountryId, StartDate;
+
+  draft action Resume;
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft determine action Prepare;
+
+  mapping for zladb_employee_p
+    {
+      EmployeeUiid         = employee_uiid;
+      EmployeeId           = employee_id;
+      TypeId               = type_id;
+      NumberIdentification = number_identification;
+      FirstName            = first_name;
+      LastName             = last_name;
+      StartDate            = start_date;
+      BeginDate            = begin_date;
+      City                 = city;
+      CountryId            = country_id;
+      Salary               = salary;
+      Currency             = currency;
+      Content              = content;
+      PhotoName            = photoname;
+      Mimetype             = mimetype;
+      LastChangedAt        = last_changed_at;
+      LocalCreatedAt       = local_created_at;
+      LocalCreatedBy       = local_created_by;
+      LocalLastChangedAt   = local_last_changed_at;
+      LocalLastChangedBy   = local_last_changed_by;
+    }
+}
+
+//define behavior for zladb_i_attach_emp alias EmployeeAttach
+//persistent table zladb_attach_emp
+//draft table zdladb_attach_em
+//lock dependent by _Employee
+//authorization dependent by _Employee
+//etag master LocalLastChangedAt
+//{
+//  update;
+//  delete;
+//
+//  field ( numbering : managed, readonly ) AttachmentUuid;
+//  field ( readonly ) EmployeeUiid, EmployeeId, CreatedAt, CreatedBy, LastChangedAt, LocalLastChangedAt, LocalLastChangedBy;
+//  field ( mandatory ) Content, Mimetype, PhotoName;
+//
+//  association _Employee{ with draft; }
+//
+//  mapping for zladb_attach_emp
+//    {
+//      EmployeeUiid       = employee_uiid;
+//      AttachmentUuid     = attachment_uuid;
+//      EmployeeId         = employee_id;
+//      Mimetype           = mimetype;
+//      PhotoName          = name;
+//      Content            = content;
+//      CreatedAt          = created_at;
+//      CreatedBy          = created_by;
+//      LastChangedAt      = last_changed_at;
+//      LocalLastChangedAt = local_last_changed_at;
+//      LocalLastChangedBy = local_last_changed_by;
+//    }
+//
+//}
+
+define behavior for zladb_i_emp_cargo alias Position
+persistent table zladb_emp_cargo
+draft table zdladb_emp_cargo
+lock dependent by _Employee
+authorization dependent by _Employee
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly ) EmployeeUiid, LastChangedAt, LocalCreatedAt, LocalCreatedBy, LocalLastChangedAt, LocalLastChangedBy;
+  field ( numbering : managed, readonly ) CargoUiid;
+  field ( mandatory ) Name;
+
+  association _Employee { with draft; }
+  association _EmpFunc { create; with draft; }
+
+  mapping for zladb_emp_cargo
+    {
+      CargoUiid          = cargo_uiid;
+      EmployeeUiid       = employee_uiid;
+      Name               = name;
+      LastChangedAt      = last_changed_at;
+      LocalCreatedAt     = local_created_at;
+      LocalCreatedBy     = local_created_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LocalLastChangedBy = local_last_changed_by;
+    }
+}
+
+define behavior for zladb_i_emp_funcio alias Function
+persistent table zladb_emp_funcio
+draft table zdladb_emp_funci
+lock dependent by _Employee
+authorization dependent by _Employee
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly ) EmployeeUiid, CargoUiid;
+  field ( numbering : managed, readonly ) FunctionUiid;
+  field ( mandatory ) NameFunction;
+
+  association _Employee{with draft;}
+  association _EmployeeCargo{with draft;}
+
+  mapping for zladb_emp_funcio
+    {
+      CargoUiid          = cargo_uiid;
+      FunctionUiid       = function_uiid;
+      EmployeeUiid       = employee_uiid;
+      NameFunction       = name_function;
+      Description        = description;
+      LastChangedAt      = last_changed_at;
+      LocalCreatedAt     = local_created_at;
+      LocalCreatedBy     = local_created_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LocalLastChangedBy = local_last_changed_by;
+    }
+}

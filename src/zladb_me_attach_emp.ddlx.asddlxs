@@ -1,0 +1,39 @@
+@Metadata.layer: #CUSTOMER
+@UI: { headerInfo: { typeName: 'Photo Employee',
+                     typeNamePlural: 'Photos Employees',
+                     title: { type: #STANDARD,
+                              label: 'Photo Employee',
+                              value: 'PhotoName' } } }
+annotate entity ZLADB_C_ATTACH_EMP with
+{
+
+  @UI.hidden: true
+  AttachmentUuid;
+
+  @UI: { 
+            lineItem:       [ { position: 10, importance: #HIGH, label: 'Photo' } ],
+            identification: [ { position: 10, label: 'Photo' } ] 
+        }
+  Content;
+
+  @UI.hidden: true
+  PhotoName;
+
+  @UI.hidden: true
+  Mimetype;
+
+  @UI.hidden: true
+  CreatedBy;
+
+  @UI.hidden: true
+  CreatedAt;
+
+  @UI.hidden: true
+  LocalLastChangedBy;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+
+  @UI.hidden: true
+  LastChangedAt;
+}

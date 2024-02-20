@@ -1,0 +1,45 @@
+@Metadata.layer: #CUSTOMER
+@UI: {
+  headerInfo: {
+    typeName: 'TableForIdentificat', 
+    typeNamePlural: 'TableForIdentificats', 
+    title: {
+      type: #STANDARD, 
+      label: 'Table for identification type', 
+      value: 'TypeId'
+    }
+  }
+}
+annotate view ZC_TableForIdentificat with
+{
+  @UI.identification: [ {
+    position: 1 
+  } ]
+  @UI.lineItem: [ {
+    position: 1 
+  } ]
+  @UI.facet: [ {
+    id: 'ZI_TableForIdentificat', 
+    purpose: #STANDARD, 
+    type: #IDENTIFICATION_REFERENCE, 
+    label: 'Table for identification type', 
+    position: 1 
+  }, 
+  {
+    id: 'ZI_TableForIdentifText', 
+    type: #LINEITEM_REFERENCE, 
+    label: 'Table for identification type Text', 
+    position: 2 , 
+    targetElement: '_TableForIdentifText'
+  } ]
+  TypeId;
+  
+  @UI.identification: [ {
+    hidden: true, 
+    position: 2 
+  } ]
+  @UI.lineItem: [ {
+    position: 2 
+  } ]
+  Text;
+}
